@@ -1,11 +1,11 @@
 import { default as bemCssModules } from 'bem-css-modules';
 import { default as WrapperStyles } from './Wrapper.module.scss';
 
-import { TWrapper } from './Wrapper.types';
+import { TChildrenRoot } from '../../../@types/shared/shared.types';
 
 const styled = bemCssModules(WrapperStyles);
 
-const Wrapper = ({ children }: TWrapper) => {
+const Wrapper = ({ children }: TChildrenRoot) => {
 	return <div className={styled('')}>{children}</div>;
 };
 

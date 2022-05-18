@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
-type TWrapper = {
+type TChildrenRoot = {
 	children: ReactNode;
 };
 
-export type { TWrapper };
+export type { TChildrenRoot };
