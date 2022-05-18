@@ -1,7 +1,13 @@
+@import './../../../styles/abstracts/mixins';
+@import './../../../styles/abstracts/variables';
+
 .main {
 	min-height: 100vh;
 	background-image: url('./../../../assets/images/bg-intro-desktop.png');
-    background-color:var(--clr-primary-red);
+	background-color: var(--clr-primary-red);
 	background-size: cover;
 	background-position: center;
+	@include mq(map-get($breakpoints-map, 'medium')) {
+		background-image: url('./../../../assets/images/bg-intro-mobile.png');
+	}
 }
