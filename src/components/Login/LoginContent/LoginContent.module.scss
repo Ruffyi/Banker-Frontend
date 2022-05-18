@@ -1,0 +1,12 @@
+@import './../../../styles/abstracts/mixins';
+@import './../../../styles/abstracts/variables';
+
+.register {
+	@include flex-mother(row, center, space-between);
+	height: 100vh;
+	padding: 2rem;
+	@include mq(map-get($breakpoints-map, 'medium')) {
+		flex-direction: column;
+		justify-content: space-around;
+	}
+}
