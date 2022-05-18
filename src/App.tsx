@@ -1,4 +1,4 @@
-import Routing from './pages/Routing/Routing';
+import Routing from './routes/Routing/Routing';
 
 const App = () => {
 	return <Routing />;
