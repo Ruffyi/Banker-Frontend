@@ -1,0 +1,6 @@
+@import './../../../styles/abstracts/mixins';
+
+.register {
+	@include flex-mother(row, center, space-between);
+	height: 100vh;
+}

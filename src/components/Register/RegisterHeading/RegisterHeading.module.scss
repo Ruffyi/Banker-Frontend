@@ -1,0 +1,12 @@
+.heading {
+	width: 50%;
+	&__title {
+		margin-bottom: 4rem;
+		font-size: 4.8rem;
+		color: var(--clr-neutral-white);
+	}
+	&__description {
+		font-size: 1.3rem;
+		color: var(--clr-neutral-white);
+	}
+}

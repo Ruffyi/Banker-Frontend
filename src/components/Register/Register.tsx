@@ -2,16 +2,18 @@ import Content from '../UI/Content/Content';
 import Main from '../UI/Main/Main';
 import Wrapper from '../UI/Wrapper/Wrapper';
 
-const RegisterForm = () => {
+import RegisterContent from './RegisterContent/RegisterContent';
+
+const Register = () => {
 	return (
 		<Main>
 			<Wrapper>
 				<Content>
-					<h2>Title!</h2>
+					<RegisterContent />
 				</Content>
 			</Wrapper>
 		</Main>
 	);
 };
 
-export default RegisterForm;
+export default Register;

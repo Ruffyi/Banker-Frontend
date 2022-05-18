@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router';
-import RegisterForm from '../../components/RegisterForm/RegisterForm';
+import RegisterForm from '../../components/Register/Register';
 
 const Routing = () => {
 	return (
