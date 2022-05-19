@@ -8,6 +8,9 @@ import Error from '../../UI/Error/Error';
 
 import { validationFormData } from '../../../utils/validation';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { postAxios } from '../../../services/helpers/apiHelpers';
+import Cookies from 'universal-cookie';
+import { API_ENDPOINT, BASE_API } from '../../../services/api';
 
 const styled = bemCssModules(RegisterFormStyles);
 
@@ -50,6 +53,20 @@ const RegisterForm = () => {
 		});
 	};
 
+	const setJWTCookies = (token: string) => {
+		const cookies = new Cookies();
+		cookies.set('jwt', token);
+	};
+
+	const createNewUser = async () => {
+		const data = await postAxios(
+			`${BASE_API}${API_ENDPOINT.signup}`,
+			registerFormData
+		);
+		const { token } = data;
+		setJWTCookies(token);
+	};
+
 	const handleFormSubmit = (e: FormEvent) => {
 		e.preventDefault();
 
@@ -60,6 +77,8 @@ const RegisterForm = () => {
 		if (errors.includes(true)) {
 			return setErrors(validationFormData(registerFormData));
 		}
+
+		createNewUser();
 
 		returnInitialStates();
 	};
