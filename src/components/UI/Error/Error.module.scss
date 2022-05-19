@@ -1,0 +1,12 @@
+@import './../../../styles/abstracts/mixins';
+
+.error {
+	text-align: right;
+	color: var(--clr-primary-red);
+	font-weight: 600;
+	font-size: 1.1rem;
+	&__icon {
+		@include positioning(absolute, 50%, 0);
+		transform: translate(-50%, -50%);
+	}
+}

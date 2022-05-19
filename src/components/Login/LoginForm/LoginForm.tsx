@@ -12,7 +12,7 @@ bemCssModules.setSettings({
 
 const LoginForm = () => {
 	const [loginFormData, setLoginFormData] = useState({
-		username: '',
+		email: '',
 		password: '',
 	});
 
@@ -28,7 +28,7 @@ const LoginForm = () => {
 		e.preventDefault();
 
 		setLoginFormData({
-			username: '',
+			email: '',
 			password: '',
 		});
 	};
@@ -38,14 +38,14 @@ const LoginForm = () => {
 			<form className={styled('form')} onSubmit={handleFormSubmit}>
 				<div className={styled('item')}>
 					<input
-						type='text'
+						type='email'
 						className={styled('item', { input: true })}
-						placeholder='Username'
-						aria-label='Username'
+						placeholder='Email'
+						aria-label='Email'
 						aria-required='true'
-						title='Username'
-						name='username'
-						value={loginFormData.username}
+						title='Email'
+						name='email'
+						value={loginFormData.email}
 						onChange={handleChangeInput}
 					/>
 				</div>
