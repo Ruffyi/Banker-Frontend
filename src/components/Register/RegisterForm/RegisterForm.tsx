@@ -11,6 +11,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { postAxios } from '../../../services/helpers/apiHelpers';
 import Cookies from 'universal-cookie';
 import { API_ENDPOINT, BASE_API } from '../../../services/api';
+import { useNavigate } from 'react-router';
 
 const styled = bemCssModules(RegisterFormStyles);
 
@@ -19,6 +20,8 @@ bemCssModules.setSettings({
 });
 
 const RegisterForm = () => {
+	const navigate = useNavigate();
+
 	const [registerFormData, setRegisterFormData] = useState({
 		email: '',
 		password: '',
@@ -67,6 +70,10 @@ const RegisterForm = () => {
 		setJWTCookies(token);
 	};
 
+	const redirectToLoginPage = () => {
+		navigate('../login', { replace: true });
+	};
+
 	const handleFormSubmit = (e: FormEvent) => {
 		e.preventDefault();
 
@@ -81,6 +88,8 @@ const RegisterForm = () => {
 		createNewUser();
 
 		returnInitialStates();
+
+		redirectToLoginPage();
 	};
 
 	return (
