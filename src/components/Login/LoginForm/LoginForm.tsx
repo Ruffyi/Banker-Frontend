@@ -8,6 +8,9 @@ import ErrorIconImage from './../../../assets/svg/icon-error.svg';
 
 import { validationFormData } from '../../../utils/validation';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { postAxios } from '../../../services/helpers/apiHelpers';
+import { BASE_API, API_ENDPOINT } from '../../../services/api';
+import Cookies from 'universal-cookie';
 
 const styled = bemCssModules(LoginFormStyles);
 
@@ -50,6 +53,21 @@ const LoginForm = () => {
 		});
 	};
 
+	const setJWTCookies = (token: string) => {
+		const cookies = new Cookies();
+		cookies.set('jwt', token);
+	};
+
+	const loginUser = async () => {
+		console.log('send');
+		const data = await postAxios(
+			`${BASE_API}${API_ENDPOINT.login}`,
+			loginFormData
+		);
+		const { token } = data;
+		setJWTCookies(token);
+	};
+
 	const handleFormSubmit = (e: FormEvent) => {
 		e.preventDefault();
 
@@ -58,8 +76,10 @@ const LoginForm = () => {
 		);
 
 		if (errors.includes(true)) {
-			return setErrors(validationFormData(loginFormData));
+			setErrors(validationFormData(loginFormData));
 		}
+
+		loginUser();
 
 		returnInitialStates();
 	};
