@@ -11,8 +11,8 @@ const postAxios = async (url: string, userData: object) => {
 
 		return data;
 	} catch (err: unknown) {
-		if (err instanceof Error) {
-			return err.message;
+		if (axios.isAxiosError(err)) {
+			return err?.response?.data;
 		}
 	}
 };

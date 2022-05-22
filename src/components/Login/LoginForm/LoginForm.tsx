@@ -30,7 +30,7 @@ const LoginForm = () => {
 		passwordConfirm: '',
 	});
 
-	const [apiError, setApiError] = useState(false);
+	const [apiError, setApiError] = useState('');
 
 	const [errors, setErrors] = useState({
 		email: { status: false, message: '' },
@@ -65,21 +65,22 @@ const LoginForm = () => {
 		cookies.set('jwt', token);
 		setToken(token);
 		setAuth(true);
+		returnInitialStates();
+		redirectToDashboard();
 	};
 
 	const loginUser = async () => {
-		setApiError(false);
 		const data = await postAxios(
 			`${BASE_API}${API_ENDPOINT.login}`,
 			loginFormData
 		);
 
-		if (typeof data === 'object') {
-			const { token } = data;
-			setJWTCookies(token);
-			redirectToDashboard();
+		if (data.error) {
+			console.log(data.error);
+			return setApiError(data.error.message);
 		}
-		setApiError(true);
+		const { token } = data;
+		setJWTCookies(token);
 	};
 
 	const redirectToDashboard = () => {
@@ -98,8 +99,6 @@ const LoginForm = () => {
 		}
 
 		loginUser();
-
-		returnInitialStates();
 	};
 
 	return (
@@ -145,7 +144,7 @@ const LoginForm = () => {
 				<Link to='../register' className={styled('route')}>
 					If you dont have account click here!
 				</Link>
-				{apiError && <p>Błędne dane. Spróbuj ponownie</p>}
+				{apiError && <Error message={apiError} />}
 			</form>
 		</div>
 	);

@@ -29,6 +29,8 @@ const RegisterForm = () => {
 		passwordConfirm: '',
 	});
 
+	const [apiError, setApiError] = useState('');
+
 	const [errors, setErrors] = useState({
 		email: { status: false, message: '' },
 		password: { status: false, message: '' },
@@ -60,6 +62,8 @@ const RegisterForm = () => {
 	const setJWTCookies = (token: string) => {
 		const cookies = new Cookies();
 		cookies.set('jwt', token);
+		returnInitialStates();
+		redirectToLoginPage();
 	};
 
 	const createNewUser = async () => {
@@ -67,6 +71,9 @@ const RegisterForm = () => {
 			`${BASE_API}${API_ENDPOINT.signup}`,
 			registerFormData
 		);
+		if (data.error) {
+			return setApiError(data.error.message);
+		}
 		const { token } = data;
 		setJWTCookies(token);
 	};
@@ -87,10 +94,6 @@ const RegisterForm = () => {
 		}
 
 		createNewUser();
-
-		returnInitialStates();
-
-		redirectToLoginPage();
 	};
 
 	return (
@@ -155,6 +158,7 @@ const RegisterForm = () => {
 				<Link to='../login' className={styled('route')}>
 					If you have account click here!
 				</Link>
+				{apiError && <Error message={apiError} />}
 			</form>
 		</div>
 	);
