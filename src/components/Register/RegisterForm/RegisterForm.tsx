@@ -12,6 +12,7 @@ import { postAxios } from '../../../services/helpers/apiHelpers';
 import Cookies from 'universal-cookie';
 import { API_ENDPOINT, BASE_API } from '../../../services/api';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const styled = bemCssModules(RegisterFormStyles);
 
@@ -151,6 +152,9 @@ const RegisterForm = () => {
 					)}
 				</div>
 				<Button title='Register' modifier='sign' />
+				<Link to='../login' className={styled('route')}>
+					If you have account click here!
+				</Link>
 			</form>
 		</div>
 	);

@@ -12,7 +12,7 @@ const postAxios = async (url: string, userData: object) => {
 		return data;
 	} catch (err: unknown) {
 		if (err instanceof Error) {
-			return err;
+			return err.message;
 		}
 	}
 };

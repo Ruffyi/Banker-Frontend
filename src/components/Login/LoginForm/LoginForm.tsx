@@ -7,10 +7,12 @@ import ErrorIcon from '../../UI/Error/ErrorIcon/ErrorIcon';
 import ErrorIconImage from './../../../assets/svg/icon-error.svg';
 
 import { validationFormData } from '../../../utils/validation';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState, useContext } from 'react';
 import { postAxios } from '../../../services/helpers/apiHelpers';
 import { BASE_API, API_ENDPOINT } from '../../../services/api';
 import Cookies from 'universal-cookie';
+import { AuthContext } from '../../../store/authContext/authContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const styled = bemCssModules(LoginFormStyles);
 
@@ -19,11 +21,16 @@ bemCssModules.setSettings({
 });
 
 const LoginForm = () => {
+	const navigate = useNavigate();
+	const { setToken, setAuth } = useContext(AuthContext);
+
 	const [loginFormData, setLoginFormData] = useState({
 		email: '',
 		password: '',
 		passwordConfirm: '',
 	});
+
+	const [apiError, setApiError] = useState(false);
 
 	const [errors, setErrors] = useState({
 		email: { status: false, message: '' },
@@ -56,27 +63,38 @@ const LoginForm = () => {
 	const setJWTCookies = (token: string) => {
 		const cookies = new Cookies();
 		cookies.set('jwt', token);
+		setToken(token);
+		setAuth(true);
 	};
 
 	const loginUser = async () => {
-		console.log('send');
+		setApiError(false);
 		const data = await postAxios(
 			`${BASE_API}${API_ENDPOINT.login}`,
 			loginFormData
 		);
-		const { token } = data;
-		setJWTCookies(token);
+
+		if (typeof data === 'object') {
+			const { token } = data;
+			setJWTCookies(token);
+			redirectToDashboard();
+		}
+		setApiError(true);
+	};
+
+	const redirectToDashboard = () => {
+		navigate('../', { replace: true });
 	};
 
 	const handleFormSubmit = (e: FormEvent) => {
 		e.preventDefault();
 
-		const errors = Object.values(validationFormData(loginFormData)).map(
-			error => error.status
-		);
+		const errors = Object.values(validationFormData(loginFormData))
+			.slice(0, 2)
+			.map(error => error.status);
 
 		if (errors.includes(true)) {
-			setErrors(validationFormData(loginFormData));
+			return setErrors(validationFormData(loginFormData));
 		}
 
 		loginUser();
@@ -124,6 +142,10 @@ const LoginForm = () => {
 					)}
 				</div>
 				<Button title='Login' modifier='sign' />
+				<Link to='../register' className={styled('route')}>
+					If you dont have account click here!
+				</Link>
+				{apiError && <p>Błędne dane. Spróbuj ponownie</p>}
 			</form>
 		</div>
 	);

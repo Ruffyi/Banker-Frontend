@@ -6,6 +6,7 @@
 	padding-right: 4rem;
 	@include mq(map-get($breakpoints-map, 'medium')) {
 		width: 90%;
+		padding: 0;
 		text-align: center;
 	}
 	&__title {
