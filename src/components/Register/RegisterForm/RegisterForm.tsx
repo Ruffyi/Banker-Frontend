@@ -93,7 +93,7 @@ const RegisterForm = () => {
 	};
 
 	return (
-		<div className={styled('')}>
+		<div className={styled('')} data-testid='register'>
 			<form className={styled('form')} onSubmit={handleFormSubmit}>
 				<div className={styled('item')}>
 					<input
@@ -136,7 +136,7 @@ const RegisterForm = () => {
 						type='password'
 						className={styled('item--input')}
 						placeholder='Password Confirm'
-						aria-label='Password Confirm'
+						aria-label='PasswordConfirm'
 						aria-required='true'
 						title='Password Confirm'
 						name='passwordConfirm'

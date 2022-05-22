@@ -1,7 +1,7 @@
 import { default as bemCssModules } from 'bem-css-modules';
 import { default as ButtonStyles } from './Button.module.scss';
 
-import { TButton } from './Button.types';
+import { TButton } from './types/Button.types';
 
 const styled = bemCssModules(ButtonStyles);
 

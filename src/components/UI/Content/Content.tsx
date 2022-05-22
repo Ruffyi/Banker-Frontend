@@ -6,7 +6,11 @@ import { TChildrenRoot } from '../../../@types/shared/shared.types';
 const styled = bemCssModules(ContentStyles);
 
 const Content = ({ children }: TChildrenRoot) => {
-	return <div className={styled('')}>{children}</div>;
+	return (
+		<div className={styled('')} data-testid='content'>
+			{children}
+		</div>
+	);
 };
 
 export default Content;

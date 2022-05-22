@@ -1,5 +1,4 @@
-import { TLoginForm } from '../components/Login/LoginForm/LoginForm.types';
-import { TRegisterForm } from '../components/Register/RegisterForm/RegisterForm.types';
+import { TForm } from '../@types/shared/shared.types';
 
 const emailValidation = (email: string) => {
 	const emailRegExp =
@@ -47,7 +46,7 @@ const passwordConfirmValidation = (
 	return { status: false, message: '' };
 };
 
-const validationFormData = (data: TRegisterForm & TLoginForm) => {
+const validationFormData = (data: TForm) => {
 	const { email, password, passwordConfirm } = data;
 
 	const errorObject = {

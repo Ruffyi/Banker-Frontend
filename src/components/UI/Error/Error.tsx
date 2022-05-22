@@ -1,7 +1,7 @@
 import { default as bemCssModules } from 'bem-css-modules';
 import { default as ErrorStyles } from './Error.module.scss';
 
-import { TError } from './Error.types';
+import { TError } from './types/Error.types';
 
 const styled = bemCssModules(ErrorStyles);
 

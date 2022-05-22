@@ -4,4 +4,10 @@ type TChildrenRoot = {
 	children: ReactNode;
 };
 
-export type { TChildrenRoot };
+type TForm = {
+	email: string;
+	password: string;
+	passwordConfirm: string;
+};
+
+export type { TChildrenRoot, TForm };

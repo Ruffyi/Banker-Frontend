@@ -85,7 +85,7 @@ const LoginForm = () => {
 	};
 
 	return (
-		<div className={styled('')}>
+		<div className={styled('')} data-testid='login'>
 			<form className={styled('form')} onSubmit={handleFormSubmit}>
 				<div className={styled('item')}>
 					<input
