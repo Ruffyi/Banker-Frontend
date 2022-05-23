@@ -1,18 +1,19 @@
-import { Route, Routes } from 'react-router';
-import Login from '../../components/Login/Login';
-import Register from '../../components/Register/Register';
+import { Navigate, Route, Routes } from 'react-router';
+import Login from './../../pages/Login/Login';
+import Register from './../../pages/Register/Register';
+import Dashboard from '../../pages/Dashboard/Dashboard';
 import PrivateRoutes from '../PrivateRoutes/PrivateRoutes';
 
 const Routing = () => {
 	return (
 		<Routes>
-			<Route path='/' element={<h1>Title!</h1>} />
+			<Route path='/' element={<Navigate to='/login' replace />} />
 
 			<Route
 				path='/dashboard'
 				element={
 					<PrivateRoutes>
-						<h1>Dashboard</h1>
+						<Dashboard />
 					</PrivateRoutes>
 				}
 			/>

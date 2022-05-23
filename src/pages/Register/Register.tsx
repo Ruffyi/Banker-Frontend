@@ -1,6 +1,6 @@
-import Content from '../UI/Content/Content';
-import Main from '../UI/Main/Main';
-import Wrapper from '../UI/Wrapper/Wrapper';
+import Content from '../../components/UI/Content/Content';
+import Main from '../../components/UI/Main/Main';
+import Wrapper from '../../components/UI/Wrapper/Wrapper';
 
 import RegisterContent from './RegisterContent/RegisterContent';
 

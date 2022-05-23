@@ -1,30 +1,29 @@
 import { default as bemCssModules } from 'bem-css-modules';
-import { default as LoginFormStyles } from './LoginForm.module.scss';
+import { default as RegisterFormStyles } from './RegisterForm.module.scss';
 
-import Button from '../../UI/Button/Button';
-import Error from '../../UI/Error/Error';
-import ErrorIcon from '../../UI/Error/ErrorIcon/ErrorIcon';
 import ErrorIconImage from './../../../assets/svg/icon-error.svg';
+import Button from '../../../components/UI/Button/Button';
+import Error from '../../../components/UI/Error/Error';
+import ErrorIcon from '../../../components/UI/Error/ErrorIcon/ErrorIcon';
 
 import { validationFormData } from '../../../utils/validation';
-import { ChangeEvent, FormEvent, useState, useContext } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { postAxios } from '../../../services/helpers/apiHelpers';
-import { BASE_API, API_ENDPOINT } from '../../../services/api';
 import Cookies from 'universal-cookie';
-import { AuthContext } from '../../../store/authContext/authContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { API_ENDPOINT, BASE_API } from '../../../services/api';
+import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
-const styled = bemCssModules(LoginFormStyles);
+const styled = bemCssModules(RegisterFormStyles);
 
 bemCssModules.setSettings({
 	modifierDelimiter: '--',
 });
 
-const LoginForm = () => {
+const RegisterForm = () => {
 	const navigate = useNavigate();
-	const { setToken, setAuth } = useContext(AuthContext);
 
-	const [loginFormData, setLoginFormData] = useState({
+	const [registerFormData, setRegisterFormData] = useState({
 		email: '',
 		password: '',
 		passwordConfirm: '',
@@ -40,8 +39,8 @@ const LoginForm = () => {
 
 	const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target as HTMLInputElement;
-		setLoginFormData(prevLoginFormDataState => ({
-			...prevLoginFormDataState,
+		setRegisterFormData(prevRegisterFormDataState => ({
+			...prevRegisterFormDataState,
 			[name]: value,
 		}));
 	};
@@ -53,7 +52,7 @@ const LoginForm = () => {
 			passwordConfirm: { status: false, message: '' },
 		});
 
-		setLoginFormData({
+		setRegisterFormData({
 			email: '',
 			password: '',
 			passwordConfirm: '',
@@ -63,18 +62,15 @@ const LoginForm = () => {
 	const setJWTCookies = (token: string) => {
 		const cookies = new Cookies();
 		cookies.set('jwt', token);
-		setToken(token);
-		setAuth(true);
 		returnInitialStates();
-		redirectToDashboard();
+		redirectToLoginPage();
 	};
 
-	const loginUser = async () => {
+	const createNewUser = async () => {
 		const data = await postAxios(
-			`${BASE_API}${API_ENDPOINT.login}`,
-			loginFormData
+			`${BASE_API}${API_ENDPOINT.signup}`,
+			registerFormData
 		);
-
 		if (data.error) {
 			return setApiError(data.error.message);
 		}
@@ -82,26 +78,26 @@ const LoginForm = () => {
 		setJWTCookies(token);
 	};
 
-	const redirectToDashboard = () => {
-		navigate('../dashboard', { replace: true });
+	const redirectToLoginPage = () => {
+		navigate('../login', { replace: true });
 	};
 
 	const handleFormSubmit = (e: FormEvent) => {
 		e.preventDefault();
 
-		const errors = Object.values(validationFormData(loginFormData))
-			.slice(0, 2)
-			.map(error => error.status);
+		const errors = Object.values(validationFormData(registerFormData)).map(
+			error => error.status
+		);
 
 		if (errors.includes(true)) {
-			return setErrors(validationFormData(loginFormData));
+			return setErrors(validationFormData(registerFormData));
 		}
 
-		loginUser();
+		createNewUser();
 	};
 
 	return (
-		<div className={styled('')} data-testid='login'>
+		<div className={styled('')} data-testid='register'>
 			<form className={styled('form')} onSubmit={handleFormSubmit}>
 				<div className={styled('item')}>
 					<input
@@ -112,7 +108,7 @@ const LoginForm = () => {
 						aria-required='true'
 						title='Email'
 						name='email'
-						value={loginFormData.email}
+						value={registerFormData.email}
 						onChange={handleChangeInput}
 					/>
 					{errors.email.status && <Error message={errors.email.message} />}
@@ -129,7 +125,7 @@ const LoginForm = () => {
 						aria-required='true'
 						title='Password'
 						name='password'
-						value={loginFormData.password}
+						value={registerFormData.password}
 						onChange={handleChangeInput}
 					/>
 					{errors.password.status && (
@@ -139,9 +135,28 @@ const LoginForm = () => {
 						<ErrorIcon icon={<img src={ErrorIconImage} alt='Error' />} />
 					)}
 				</div>
-				<Button title='Login' modifier='sign' />
-				<Link to='../register' className={styled('route')}>
-					If you dont have account click here!
+				<div className={styled('item')}>
+					<input
+						type='password'
+						className={styled('item--input')}
+						placeholder='Password Confirm'
+						aria-label='PasswordConfirm'
+						aria-required='true'
+						title='Password Confirm'
+						name='passwordConfirm'
+						value={registerFormData.passwordConfirm}
+						onChange={handleChangeInput}
+					/>
+					{errors.passwordConfirm.status && (
+						<Error message={errors.passwordConfirm.message} />
+					)}
+					{errors.passwordConfirm.status && (
+						<ErrorIcon icon={<img src={ErrorIconImage} alt='Error' />} />
+					)}
+				</div>
+				<Button title='Register' modifier='sign' />
+				<Link to='../login' className={styled('route')}>
+					If you have account click here!
 				</Link>
 				{apiError && <Error message={apiError} />}
 			</form>
@@ -149,4 +164,4 @@ const LoginForm = () => {
 	);
 };
 
-export default LoginForm;
+export default RegisterForm;
