@@ -14,7 +14,9 @@ import {
 
 import BankerLogo from './../../assets/images/logo.png';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../store/authContext/authContext';
+import { deleteCookie } from '../../utils/cookies';
 
 const styled = bemCssModules(NavigationStyles);
 
@@ -23,7 +25,14 @@ bemCssModules.setSettings({
 });
 
 const Navigation = () => {
+	const { setAuth, setToken } = useContext(AuthContext);
 	const [mobile, setMobile] = useState(false);
+
+	const handleSignOut = () => {
+		deleteCookie('jwt');
+		setAuth(false);
+		setToken('');
+	};
 
 	const handleMobileViewChange = () => {
 		setMobile(mobile => !mobile);
@@ -62,7 +71,7 @@ const Navigation = () => {
 					</li>
 				</ul>
 				<div className={styled('signout')}>
-					<Link to='/login' className={styled('link')}>
+					<Link to='/login' className={styled('link')} onClick={handleSignOut}>
 						<FontAwesomeIcon icon={faSignOut} className={styled('icon')} />
 						Log out
 					</Link>

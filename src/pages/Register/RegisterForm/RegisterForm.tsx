@@ -9,10 +9,10 @@ import ErrorIcon from '../../../components/UI/Error/ErrorIcon/ErrorIcon';
 import { validationFormData } from '../../../utils/validation';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { postAxios } from '../../../services/helpers/apiHelpers';
-import Cookies from 'universal-cookie';
 import { API_ENDPOINT, BASE_API } from '../../../services/api';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import { saveCookie } from '../../../utils/cookies';
 
 const styled = bemCssModules(RegisterFormStyles);
 
@@ -60,8 +60,7 @@ const RegisterForm = () => {
 	};
 
 	const setJWTCookies = (token: string) => {
-		const cookies = new Cookies();
-		cookies.set('jwt', token);
+		saveCookie('jwt', token);
 		returnInitialStates();
 		redirectToLoginPage();
 	};

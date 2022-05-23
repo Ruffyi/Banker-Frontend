@@ -10,9 +10,9 @@ import { validationFormData } from '../../../utils/validation';
 import { ChangeEvent, FormEvent, useState, useContext } from 'react';
 import { postAxios } from '../../../services/helpers/apiHelpers';
 import { BASE_API, API_ENDPOINT } from '../../../services/api';
-import Cookies from 'universal-cookie';
 import { AuthContext } from '../../../store/authContext/authContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { saveCookie } from '../../../utils/cookies';
 
 const styled = bemCssModules(LoginFormStyles);
 
@@ -61,8 +61,7 @@ const LoginForm = () => {
 	};
 
 	const setJWTCookies = (token: string) => {
-		const cookies = new Cookies();
-		cookies.set('jwt', token);
+		saveCookie('jwt', token);
 		setToken(token);
 		setAuth(true);
 		returnInitialStates();
