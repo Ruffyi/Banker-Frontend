@@ -76,7 +76,6 @@ const LoginForm = () => {
 		);
 
 		if (data.error) {
-			console.log(data.error);
 			return setApiError(data.error.message);
 		}
 		const { token } = data;
@@ -84,7 +83,7 @@ const LoginForm = () => {
 	};
 
 	const redirectToDashboard = () => {
-		navigate('../', { replace: true });
+		navigate('../dashboard', { replace: true });
 	};
 
 	const handleFormSubmit = (e: FormEvent) => {
