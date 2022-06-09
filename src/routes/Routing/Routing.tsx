@@ -3,6 +3,7 @@ import Login from './../../pages/Login/Login';
 import Register from './../../pages/Register/Register';
 import Dashboard from '../../pages/Dashboard/Dashboard';
 import PrivateRoutes from '../PrivateRoutes/PrivateRoutes';
+import Profile from '../../pages/User/Profile';
 
 const Routing = () => {
 	return (
@@ -14,6 +15,15 @@ const Routing = () => {
 				element={
 					<PrivateRoutes>
 						<Dashboard />
+					</PrivateRoutes>
+				}
+			/>
+
+			<Route
+				path='/profile'
+				element={
+					<PrivateRoutes>
+						<Profile />
 					</PrivateRoutes>
 				}
 			/>

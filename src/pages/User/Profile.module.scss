@@ -1,0 +1,16 @@
+@import './../../styles/abstracts/mixins';
+
+.user {
+	@include flex-mother();
+	height: 100vh;
+	padding: 0 2rem;
+	&__container {
+		@include flex-mother(row, flex-start, flex-start);
+		position: relative;
+		height: 80vh;
+		width: 100%;
+		background-color: var(--clr-neutral-white);
+		border-radius: 1rem;
+		box-shadow: 0 0.5rem 1rem var(--clr-box-shadow);
+	}
+}

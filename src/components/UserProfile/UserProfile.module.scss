@@ -1,0 +1,10 @@
+.profile {
+	height: 100%;
+	flex-grow: 1;
+	&__title {
+		font-size: 2.5rem;
+		color: var(--clr-neutral-dark-blue);
+		padding: 3rem;
+		text-transform: uppercase;
+	}
+}
